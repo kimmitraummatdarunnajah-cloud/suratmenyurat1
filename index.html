@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiSuRAT PKP — Bidang Perumahan & Kawasan Permukiman</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Earthy green palette */
+  --forest:   #1B4332;
+  --pine:     #2D6A4F;
+  --moss:     #40916C;
+  --sage:     #52B788;
+  --mint:     #B7E4C7;
+  --cream:    #F0F7F4;
+  --earth:    #6B4C2A;
+  --sand:     #D4A96A;
+  --gold:     #F4C542;
+  --brick:    #C1440E;
+  --sky:      #2C7DA0;
+  --sky-lt:   #A8DADC;
+  /* Neutrals */
+  --ink:      #0D1B14;
+  --charcoal: #1C2B22;
+  --slate:    #3D5348;
+  --mist:     #8FA89A;
+  --fog:      #C8D8CF;
+  --ghost:    #E8F2EC;
+  --white:    #FFFFFF;
+  /* Semantic */
+  --danger:   #C1440E;
+  --danger-lt:#FDEEE8;
+  --warn:     #D4890A;
+  --warn-lt:  #FEF5E4;
+  --ok:       #2D6A4F;
+  --ok-lt:    #D8F3E3;
+  --info:     #2C7DA0;
+  --info-lt:  #DFF0F7;
+  /* Sizing */
+  --sidebar-w:270px;
+  --header-h: 64px;
+  --r:        10px;
+  --r-lg:     16px;
+  --r-xl:     22px;
+}
+
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;display:flex;font-size:14px;line-height:1.5}
+
+/* ═══════════════════════════════ SIDEBAR ═══════════════════════════════ */
+.sidebar{
+  width:var(--sidebar-w);min-height:100vh;position:fixed;top:0;left:0;
+  background:var(--forest);
+  display:flex;flex-direction:column;z-index:100;
+  box-shadow:4px 0 24px rgba(0,0,0,0.18);
+}
+
+/* Sidebar top accent stripe */
+.sidebar::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--sage),var(--gold),var(--sand));
+}
+
+.sb-header{padding:24px 20px 18px;border-bottom:1px solid rgba(255,255,255,0.08)}
+
+.sb-logo-wrap{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+
+.sb-logo{
+  width:48px;height:48px;border-radius:12px;flex-shrink:0;
+  background:white;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,0.25);
+}
+.sb-logo img{width:44px;height:44px;object-fit:contain}
+.sb-logo-svg{display:flex;align-items:center;justify-content:center;font-size:22px}
+
+.sb-org h1{font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:700;color:var(--sage);line-height:1.35;text-transform:uppercase;letter-spacing:0.4px}
+.sb-org p{font-size:10px;color:rgba(255,255,255,0.45);margin-top:2px;line-height:1.4}
+
+.sb-app-badge{
+  background:rgba(82,183,136,0.15);border:1px solid rgba(82,183,136,0.3);
+  border-radius:8px;padding:7px 12px;font-size:11px;color:var(--sage);
+  font-weight:500;display:flex;align-items:center;gap:6px;
+}
+.sb-app-badge svg{width:13px;height:13px;opacity:.8}
+
+.sb-nav{flex:1;padding:14px 12px;overflow-y:auto}
+.sb-section-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.28);padding:10px 8px 5px}
+
+.nav-item{
+  display:flex;align-items:center;gap:11px;padding:10px 12px;
+  border-radius:9px;cursor:pointer;color:rgba(255,255,255,0.6);
+  font-size:13.5px;font-weight:500;transition:all .18s;margin-bottom:2px;user-select:none;
+}
+.nav-item:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.9)}
+.nav-item.active{background:rgba(82,183,136,0.18);color:var(--sage);box-shadow:inset 3px 0 0 var(--sage)}
+.nav-item .ni{
+  width:31px;height:31px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;background:rgba(255,255,255,0.06);transition:all .18s;
+}
+.nav-item.active .ni{background:rgba(82,183,136,0.2)}
+.nav-item:hover .ni{background:rgba(255,255,255,0.1)}
+.nb{margin-left:auto;background:var(--brick);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;min-width:20px;text-align:center}
+
+.sb-footer{padding:14px 16px;border-top:1px solid rgba(255,255,255,0.08)}
+.sb-user{display:flex;align-items:center;gap:10px}
+.sb-avatar{width:35px;height:35px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--pine));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:white;flex-shrink:0}
+.sb-user-info p{font-size:12.5px;color:white;font-weight:500}
+.sb-user-info span{font-size:10.5px;color:rgba(255,255,255,0.4)}
+
+/* ═══════════════════════════════ MAIN ═══════════════════════════════ */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+.topbar{
+  height:var(--header-h);background:white;border-bottom:1px solid var(--fog);
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  position:sticky;top:0;z-index:50;box-shadow:0 1px 6px rgba(27,67,50,0.06);
+}
+.topbar-l h2{font-family:'DM Sans',sans-serif;font-size:18px;font-weight:700;color:var(--ink)}
+.topbar-l p{font-size:12px;color:var(--mist);margin-top:1px}
+.topbar-r{display:flex;align-items:center;gap:10px}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 17px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .16s;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.btn-primary{background:var(--pine);color:white;box-shadow:0 2px 8px rgba(45,106,79,0.35)}
+.btn-primary:hover{background:var(--forest);transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,67,50,0.35)}
+.btn-green{background:var(--moss);color:white;box-shadow:0 2px 8px rgba(64,145,108,0.35)}
+.btn-green:hover{background:var(--pine);transform:translateY(-1px)}
+.btn-ghost{background:var(--ghost);color:var(--slate);border:1px solid var(--fog)}
+.btn-ghost:hover{background:var(--fog);color:var(--ink)}
+.btn-sm{padding:6px 13px;font-size:12px}
+.btn-danger{background:var(--danger);color:white}
+.btn-danger:hover{background:#a33a0c}
+
+.date-pill{background:var(--ghost);color:var(--pine);border:1px solid var(--mint);border-radius:8px;padding:6px 13px;font-size:12px;font-weight:600;font-family:'JetBrains Mono',monospace}
+
+.content{flex:1;padding:26px 28px}
+.page{display:none}.page.active{display:block}
+
+/* ═══════════════════════════════ DASHBOARD ═══════════════════════════════ */
+.hero-banner{
+  border-radius:var(--r-xl);overflow:hidden;
+  background:linear-gradient(130deg,var(--forest) 0%,var(--pine) 55%,#1a5c42 100%);
+  padding:28px 32px;margin-bottom:24px;position:relative;
+  box-shadow:0 6px 24px rgba(27,67,50,0.22);
+}
+.hero-banner::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2352B788' fill-opacity='0.06'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-inner{position:relative;display:flex;align-items:center;gap:22px}
+.hero-logo-box{
+  width:74px;height:74px;border-radius:16px;background:white;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);overflow:hidden;
+}
+.hero-logo-box img{width:66px;height:66px;object-fit:contain}
+.hero-text h2{font-family:'DM Serif Display',serif;font-size:20px;color:white;line-height:1.25;margin-bottom:4px}
+.hero-text p{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5}
+.hero-chips{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.hero-chip{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:4px 10px;font-size:11px;color:rgba(255,255,255,0.75);font-weight:500}
+.hero-stats{margin-left:auto;display:flex;gap:6px;flex-shrink:0}
+.hstat{
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:12px;padding:14px 18px;text-align:center;min-width:80px;
+}
+.hstat-n{font-family:'DM Serif Display',serif;font-size:30px;color:var(--gold);line-height:1}
+.hstat-l{font-size:10px;color:rgba(255,255,255,0.55);margin-top:4px;font-weight:500}
+
+/* STAT CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kard{
+  background:white;border-radius:var(--r-lg);padding:20px;
+  box-shadow:0 1px 4px rgba(27,67,50,0.07),0 2px 8px rgba(27,67,50,0.04);
+  border:1px solid var(--fog);position:relative;overflow:hidden;transition:all .2s;
+}
+.kard:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(27,67,50,0.1)}
+.kard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.kard.k-green::after{background:linear-gradient(90deg,var(--moss),var(--sage))}
+.kard.k-gold::after{background:linear-gradient(90deg,var(--sand),var(--gold))}
+.kard.k-brick::after{background:linear-gradient(90deg,var(--brick),#e85a2a)}
+.kard.k-sky::after{background:linear-gradient(90deg,var(--sky),#4aa3c5)}
+.kard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.kard-lbl{font-size:12px;color:var(--mist);font-weight:500}
+.kard-ico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.ico-green{background:var(--ok-lt)} .ico-gold{background:var(--warn-lt)} .ico-brick{background:var(--danger-lt)} .ico-sky{background:var(--info-lt)}
+.kard-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--ink);line-height:1;margin-bottom:4px}
+.kard-sub{font-size:11.5px;color:var(--mist)}
+
+/* DASH GRID */
+.dash-grid{display:grid;grid-template-columns:3fr 2fr;gap:18px}
+
+/* CARD COMPONENT */
+.card{background:white;border-radius:var(--r-lg);border:1px solid var(--fog);box-shadow:0 1px 4px rgba(27,67,50,0.06);overflow:hidden}
+.card-hd{padding:16px 20px;border-bottom:1px solid var(--ghost);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-ttl{font-size:14.5px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:8px}
+.ttl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.card-bd{padding:20px}
+
+/* ACTIVITY */
+.act-list{display:flex;flex-direction:column}
+.act-item{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-bottom:1px solid var(--ghost)}
+.act-item:last-child{border-bottom:none}
+.act-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:1px}
+.act-info p{font-size:13px;font-weight:500;color:var(--ink);line-height:1.4}
+.act-info span{font-size:11px;color:var(--mist);margin-top:2px;display:block}
+
+/* QUICKSTATS */
+.qs{display:flex;flex-direction:column;gap:10px}
+.qs-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--ghost);border-radius:9px;border:1px solid var(--fog)}
+.qs-lbl{font-size:12.5px;color:var(--slate);font-weight:500;display:flex;align-items:center;gap:8px}
+.qs-val{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink)}
+
+/* ═══════════════════════════════ TABLES ═══════════════════════════════ */
+.filter-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sbox{position:relative;flex:1;min-width:200px}
+.sbox input{width:100%;padding:9px 12px 9px 37px;border:1px solid var(--fog);border-radius:8px;font-size:13px;color:var(--slate);outline:none;background:var(--ghost);transition:all .18s;font-family:'DM Sans',sans-serif}
+.sbox input:focus{border-color:var(--moss);background:white;box-shadow:0 0 0 3px rgba(64,145,108,0.12)}
+.sbox-ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--mist);font-size:14px;pointer-events:none}
+.fsel{padding:9px 12px;border:1px solid var(--fog);border-radius:8px;font-size:13px;color:var(--slate);outline:none;background:var(--ghost);cursor:pointer;font-family:'DM Sans',sans-serif}
+.fsel:focus{border-color:var(--moss);background:white}
+
+.tbl-wrap{overflow-x:auto}
+.dtbl{width:100%;border-collapse:collapse;font-size:13px}
+.dtbl thead th{background:var(--ghost);padding:11px 14px;text-align:left;font-weight:600;color:var(--slate);font-size:11px;text-transform:uppercase;letter-spacing:.7px;border-bottom:1px solid var(--fog);white-space:nowrap}
+.dtbl thead th:first-child{border-radius:0}
+.dtbl tbody tr{border-bottom:1px solid var(--ghost);transition:background .14s}
+.dtbl tbody tr:hover{background:var(--cream)}
+.dtbl tbody tr:last-child{border-bottom:none}
+.dtbl tbody td{padding:12px 14px;color:var(--slate);vertical-align:middle}
+.dtbl tbody td:first-child{font-weight:600;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px}
+.no-row td{text-align:center;padding:42px;color:var(--mist);font-style:italic}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.b-green{background:var(--ok-lt);color:var(--pine)}
+.b-gold{background:var(--warn-lt);color:var(--warn)}
+.b-red{background:var(--danger-lt);color:var(--danger)}
+.b-sky{background:var(--info-lt);color:var(--sky)}
+.b-gray{background:var(--ghost);color:var(--mist)}
+.b-purple{background:#EDE9FE;color:#6D28D9}
+.b-moss{background:var(--ok-lt);color:var(--moss)}
+
+/* FILE BADGE */
+.fbadge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;background:#EDE9FE;color:#6D28D9;cursor:pointer;transition:all .15s;white-space:nowrap}
+.fbadge:hover{background:#6D28D9;color:white}
+
+/* ACTION BUTTONS */
+.act-cell{display:flex;gap:5px;align-items:center}
+.abtn{padding:5px 11px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:pointer;border:none;transition:all .15s;display:inline-flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif}
+.abtn-view{background:var(--info-lt);color:var(--sky)}.abtn-view:hover{background:var(--sky);color:white}
+.abtn-edit{background:var(--warn-lt);color:var(--warn)}.abtn-edit:hover{background:var(--warn);color:white}
+.abtn-del{background:var(--danger-lt);color:var(--danger)}.abtn-del:hover{background:var(--danger);color:white}
+
+/* ═══════════════════════════════ MODAL ═══════════════════════════════ */
+.backdrop{display:none;position:fixed;inset:0;background:rgba(13,27,20,0.65);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.backdrop.show{display:flex}
+.modal{background:white;border-radius:var(--r-xl);width:100%;max-width:680px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:mIn .22s cubic-bezier(.34,1.56,.64,1)}
+.modal-lg{max-width:780px}
+@keyframes mIn{from{opacity:0;transform:translateY(-20px) scale(.97)}to{opacity:1;transform:none}}
+.modal-hd{padding:20px 24px;border-bottom:1px solid var(--fog);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--ghost),white)}
+.modal-ttl{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);display:flex;align-items:center;gap:10px}
+.modal-ttl-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.mclose{width:32px;height:32px;border-radius:8px;border:none;background:var(--ghost);cursor:pointer;font-size:18px;color:var(--mist);display:flex;align-items:center;justify-content:center;transition:all .15s}
+.mclose:hover{background:var(--danger-lt);color:var(--danger)}
+.modal-bd{padding:24px}
+.modal-ft{padding:16px 24px;border-top:1px solid var(--ghost);display:flex;justify-content:flex-end;gap:10px;background:var(--ghost)}
+
+/* FORM */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fi{display:flex;flex-direction:column;gap:5px}
+.fi.full{grid-column:1/-1}
+.fl{font-size:11.5px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.5px}
+.fl .req{color:var(--danger)}
+.fc{padding:10px 13px;border:1.5px solid var(--fog);border-radius:9px;font-size:13.5px;color:var(--ink);outline:none;transition:all .18s;background:var(--ghost);font-family:'DM Sans',sans-serif}
+.fc:focus{border-color:var(--moss);background:white;box-shadow:0 0 0 3px rgba(64,145,108,0.12)}
+textarea.fc{resize:vertical;min-height:80px}
+
+/* FILE UPLOAD */
+.upzone{border:2px dashed var(--fog);border-radius:12px;padding:22px;text-align:center;cursor:pointer;transition:all .2s;background:var(--ghost);position:relative}
+.upzone:hover,.upzone.drag{border-color:var(--moss);background:#f0faf4}
+.upzone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upzone-ico{font-size:30px;margin-bottom:6px}
+.upzone-txt{font-size:13px;color:var(--mist)}.upzone-txt strong{color:var(--pine)}
+.upzone-hint{font-size:11px;color:var(--fog);margin-top:3px}
+
+.flist{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.fitem{display:flex;align-items:center;gap:10px;padding:9px 12px;background:white;border:1px solid var(--fog);border-radius:9px;transition:all .15s}
+.fitem:hover{border-color:var(--sage);background:var(--cream)}
+.fitem-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.fitem-info{flex:1;min-width:0}
+.fitem-name{font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fitem-sz{font-size:11px;color:var(--mist)}
+.fdel{width:26px;height:26px;border-radius:6px;border:none;background:var(--danger-lt);color:var(--danger);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.fdel:hover{background:var(--danger);color:white}
+
+/* DETAIL */
+.det-banner{border-radius:12px;padding:14px 18px;margin-bottom:18px;border-left:4px solid}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.det-item{display:flex;flex-direction:column;gap:3px}
+.det-item.full{grid-column:1/-1}
+.det-lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mist)}
+.det-val{font-size:14px;color:var(--ink);font-weight:500}
+
+/* ATTACH SECTION */
+.att-sec{margin-top:18px;padding-top:18px;border-top:1px solid var(--ghost)}
+.att-sec-hd{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mist);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.att-items{display:flex;flex-direction:column;gap:8px}
+.att-item{display:flex;align-items:center;gap:11px;padding:10px 14px;background:var(--ghost);border-radius:9px;border:1px solid var(--fog);transition:all .15s}
+.att-item:hover{background:var(--cream);border-color:var(--sage)}
+.att-name{font-size:13px;font-weight:500;color:var(--ink);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.att-meta{font-size:11px;color:var(--mist);margin-top:1px}
+.att-btns{display:flex;gap:5px}
+.att-btn{padding:5px 11px;border-radius:7px;border:none;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:4px;font-family:'DM Sans',sans-serif}
+.att-prev{background:var(--ok-lt);color:var(--pine)}.att-prev:hover{background:var(--pine);color:white}
+.att-dl{background:var(--info-lt);color:var(--sky)}.att-dl:hover{background:var(--sky);color:white}
+.att-del{width:26px;height:26px;border-radius:6px;border:none;background:var(--danger-lt);color:var(--danger);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.att-del:hover{background:var(--danger);color:white}
+.att-empty{text-align:center;padding:22px;color:var(--mist);font-size:13px}
+
+/* REKAP */
+.rekap-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:110px;padding:6px 2px 0}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar-grp{display:flex;gap:2px;align-items:flex-end;width:100%}
+.bar{border-radius:4px 4px 0 0;transition:all .3s}
+.bar-lbl{font-size:9.5px;color:var(--mist)}
+
+/* SUMMARY BOXES */
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sum-box{border-radius:11px;padding:14px;text-align:center;border:1px solid transparent}
+.sum-n{font-family:'DM Serif Display',serif;font-size:30px;line-height:1}
+.sum-l{font-size:11.5px;color:var(--mist);margin-top:3px}
+
+/* TOAST */
+.toast{position:fixed;bottom:22px;right:22px;padding:12px 18px;border-radius:11px;font-size:13.5px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.18);z-index:999;display:none;gap:8px;align-items:center;font-family:'DM Sans',sans-serif;animation:tsIn .25s ease}
+.toast.show{display:flex}
+.toast.ok{background:var(--pine);color:white}
+.toast.err{background:var(--danger);color:white}
+@keyframes tsIn{from{transform:translateY(12px);opacity:0}to{transform:none;opacity:1}}
+
+/* TABS */
+.tabs{display:flex;gap:3px;background:var(--ghost);padding:4px;border-radius:10px;width:fit-content}
+.tab-btn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--mist);transition:all .18s;font-family:'DM Sans',sans-serif}
+.tab-btn.active{background:white;color:var(--ink);font-weight:700;box-shadow:0 1px 4px rgba(27,67,50,0.1)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+
+/* PREVIEW MODAL */
+.prev-img{max-width:100%;max-height:72vh;border-radius:10px;display:block;margin:0 auto}
+.prev-frame{width:100%;height:72vh;border:none;border-radius:10px}
+
+@media(max-width:1180px){.cards-grid{grid-template-columns:repeat(2,1fr)}.dash-grid{grid-template-columns:1fr}}
+@media(max-width:820px){.sidebar{width:68px}.sb-header p,.sb-org p,.sb-org h1,.sb-section-lbl,.nav-item>span,.sb-footer .sb-user-info,.nb,.sb-app-badge span{display:none}.main{margin-left:68px}.cards-grid{grid-template-columns:repeat(2,1fr)}.fg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<aside class="sidebar">
+  <div class="sb-header">
+    <div class="sb-logo-wrap">
+      <div class="sb-logo">
+        <!-- House + leaf SVG logo -->
+        <svg viewBox="0 0 44 44" width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="10" fill="#1B4332"/>
+          <!-- House shape -->
+          <polygon points="22,8 36,22 32,22 32,36 12,36 12,22 8,22" fill="#52B788"/>
+          <rect x="18" y="26" width="8" height="10" rx="1" fill="#1B4332"/>
+          <!-- Leaf accent -->
+          <path d="M30 14 Q36 14 36 20 Q36 26 30 26 Q30 20 30 14Z" fill="#F4C542" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="sb-org">
+        <h1>Bidang Perumahan<br>& Kawasan Permukiman</h1>
+        <p>PerkimTanLH Kab. Kapuas Hulu</p>
+      </div>
+    </div>
+    <div class="sb-app-badge">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4zm2 1v6h8V5H4z"/></svg>
+      <span>SiSuRAT PKP</span>
+    </div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-section-lbl">Menu Utama</div>
+    <div class="nav-item active" onclick="showPage('dashboard',this)"><div class="ni">📊</div><span>Dashboard</span></div>
+    <div class="sb-section-lbl">Pengelolaan Surat</div>
+    <div class="nav-item" onclick="showPage('masuk',this)"><div class="ni">📥</div><span>Surat Masuk</span><span class="nb" id="badge-masuk">0</span></div>
+    <div class="nav-item" onclick="showPage('keluar',this)"><div class="ni">📤</div><span>Surat Keluar</span></div>
+    <div class="sb-section-lbl">Laporan</div>
+    <div class="nav-item" onclick="showPage('rekap',this)"><div class="ni">📋</div><span>Rekap & Laporan</span></div>
+    <div class="nav-item" onclick="showPage('arsip',this)"><div class="ni">🗄️</div><span>Arsip Surat</span></div>
+  </nav>
+
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-avatar">SA</div>
+      <div class="sb-user-info"><p>Staff Admin</p><span>Bidang PKP</span></div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<main class="main">
+  <header class="topbar">
+    <div class="topbar-l">
+      <h2 id="page-title">Dashboard</h2>
+      <p id="page-sub">Ringkasan aktivitas surat masuk &amp; keluar</p>
+    </div>
+    <div class="topbar-r">
+      <div class="date-pill" id="cur-date">—</div>
+      <button class="btn btn-primary" onclick="openModal('m-masuk')">＋ Surat Masuk</button>
+      <button class="btn btn-green" onclick="openModal('m-keluar')">✉ Surat Keluar</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="page active" id="page-dashboard">
+      <div class="hero-banner">
+        <div class="hero-inner">
+          <div class="hero-logo-box">
+            <svg viewBox="0 0 66 66" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+              <rect width="66" height="66" rx="14" fill="#1B4332"/>
+              <polygon points="33,10 54,31 48,31 48,56 18,56 18,31 12,31" fill="#52B788"/>
+              <rect x="26" y="40" width="14" height="16" rx="2" fill="#1B4332"/>
+              <rect x="26" y="24" width="6" height="6" rx="1" fill="#B7E4C7"/>
+              <rect x="34" y="24" width="6" height="6" rx="1" fill="#B7E4C7"/>
+              <path d="M46 16 Q58 16 58 28 Q58 40 46 40 Q46 28 46 16Z" fill="#F4C542"/>
+            </svg>
+          </div>
+          <div class="hero-text">
+            <h2>Bidang Perumahan dan Kawasan Permukiman</h2>
+            <p>Dinas Perumahan, Permukiman, Pertanahan dan Lingkungan Hidup<br>Kabupaten Kapuas Hulu — Provinsi Kalimantan Barat</p>
+            <div class="hero-chips">
+              <span class="hero-chip">🏠 Perumahan</span>
+              <span class="hero-chip">🌿 Kawasan Permukiman</span>
+              <span class="hero-chip">📋 Manajemen Surat</span>
+            </div>
+          </div>
+          <div class="hero-stats">
+            <div class="hstat"><div class="hstat-n" id="h-total">0</div><div class="hstat-l">Total Surat</div></div>
+            <div class="hstat"><div class="hstat-n" id="h-bulan">0</div><div class="hstat-l">Bulan Ini</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="kard k-green"><div class="kard-top"><div class="kard-lbl">Surat Masuk</div><div class="kard-ico ico-green">📥</div></div><div class="kard-num" id="s-masuk">0</div><div class="kard-sub">↑ Total tahun berjalan</div></div>
+        <div class="kard k-gold"><div class="kard-top"><div class="kard-lbl">Surat Keluar</div><div class="kard-ico ico-gold">📤</div></div><div class="kard-num" id="s-keluar">0</div><div class="kard-sub">↑ Total tahun berjalan</div></div>
+        <div class="kard k-brick"><div class="kard-top"><div class="kard-lbl">Belum Diproses</div><div class="kard-ico ico-brick">⏳</div></div><div class="kard-num" id="s-pending">0</div><div class="kard-sub">Surat masuk menunggu tindak lanjut</div></div>
+        <div class="kard k-sky"><div class="kard-top"><div class="kard-lbl">Total File Lampiran</div><div class="kard-ico ico-sky">📎</div></div><div class="kard-num" id="s-files">0</div><div class="kard-sub">File tersimpan di sistem</div></div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-ttl"><span class="ttl-dot" style="background:var(--moss)"></span>Aktivitas Terkini</div>
+            <button class="btn btn-ghost btn-sm" onclick="showPage('masuk',document.querySelector('.nav-item:nth-child(3)'))">Lihat Semua →</button>
+          </div>
+          <div class="card-bd" style="padding:0 20px">
+            <div class="act-list" id="act-list"><div style="text-align:center;padding:40px;color:var(--mist)">📭 Belum ada aktivitas</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><div class="card-ttl"><span class="ttl-dot" style="background:var(--gold)"></span>Statistik Cepat</div></div>
+          <div class="card-bd">
+            <div class="qs">
+              <div class="qs-row"><span class="qs-lbl">📥 Surat Masuk</span><span class="qs-val" id="qs-m" style="color:var(--pine)">0</span></div>
+              <div class="qs-row"><span class="qs-lbl">📤 Surat Keluar</span><span class="qs-val" id="qs-k" style="color:var(--moss)">0</span></div>
+              <div class="qs-row"><span class="qs-lbl">⏳ Pending</span><span class="qs-val" id="qs-p" style="color:var(--warn)">0</span></div>
+              <div class="qs-row"><span class="qs-lbl">✅ Selesai</span><span class="qs-val" id="qs-s" style="color:var(--pine)">0</span></div>
+              <div class="qs-row"><span class="qs-lbl">🔴 Sangat Segera</span><span class="qs-val" id="qs-u" style="color:var(--danger)">0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SURAT MASUK ═══ -->
+    <div class="page" id="page-masuk">
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-ttl"><span class="ttl-dot" style="background:var(--pine)"></span>Daftar Surat Masuk</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--mist)">Total: <strong id="cnt-masuk">0</strong></span>
+            <button class="btn btn-primary btn-sm" onclick="openModal('m-masuk')">＋ Tambah</button>
+          </div>
+        </div>
+        <div style="padding:14px 20px;border-bottom:1px solid var(--ghost)">
+          <div class="filter-row">
+            <div class="sbox"><span class="sbox-ic">🔍</span><input type="text" placeholder="Cari surat masuk..." oninput="doFilter('masuk',this.value)"></div>
+            <select class="fsel" onchange="filterStatus('masuk',this.value)"><option value="">Semua Status</option><option>Belum Diproses</option><option>Sedang Diproses</option><option>Selesai</option></select>
+            <select class="fsel" onchange="filterPriority(this.value)"><option value="">Semua Prioritas</option><option>Biasa</option><option>Penting</option><option>Segera</option><option>Sangat Segera</option></select>
+            <button class="btn btn-ghost btn-sm" onclick="doExport('masuk')">⬇ Export</button>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table class="dtbl">
+            <thead><tr><th>No. Agenda</th><th>No. Surat</th><th>Tgl Terima</th><th>Asal Surat</th><th>Perihal</th><th>Sifat</th><th>Prioritas</th><th>Status</th><th>Lampiran</th><th>Aksi</th></tr></thead>
+            <tbody id="tb-masuk"><tr class="no-row"><td colspan="10">Belum ada data surat masuk</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ SURAT KELUAR ═══ -->
+    <div class="page" id="page-keluar">
+      <div class="card">
+        <div class="card-hd">
+          <div class="card-ttl"><span class="ttl-dot" style="background:var(--moss)"></span>Daftar Surat Keluar</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--mist)">Total: <strong id="cnt-keluar">0</strong></span>
+            <button class="btn btn-green btn-sm" onclick="openModal('m-keluar')">＋ Tambah</button>
+          </div>
+        </div>
+        <div style="padding:14px 20px;border-bottom:1px solid var(--ghost)">
+          <div class="filter-row">
+            <div class="sbox"><span class="sbox-ic">🔍</span><input type="text" placeholder="Cari surat keluar..." oninput="doFilter('keluar',this.value)"></div>
+            <select class="fsel" onchange="filterStatus('keluar',this.value)"><option value="">Semua Status</option><option>Konsep</option><option>Dikirim</option><option>Selesai</option></select>
+            <button class="btn btn-ghost btn-sm" onclick="doExport('keluar')">⬇ Export</button>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table class="dtbl">
+            <thead><tr><th>No. Agenda</th><th>No. Surat</th><th>Tgl Surat</th><th>Tujuan</th><th>Perihal</th><th>Sifat</th><th>Penandatangan</th><th>Status</th><th>Lampiran</th><th>Aksi</th></tr></thead>
+            <tbody id="tb-keluar"><tr class="no-row"><td colspan="10">Belum ada data surat keluar</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ REKAP ═══ -->
+    <div class="page" id="page-rekap">
+      <div class="rekap-grid">
+        <div class="card">
+          <div class="card-hd"><div class="card-ttl"><span class="ttl-dot" style="background:var(--sage)"></span>Grafik Per Bulan</div></div>
+          <div class="card-bd">
+            <div class="chart-bars" id="chart-bars"></div>
+            <div style="display:flex;gap:14px;margin-top:10px;font-size:12px">
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:var(--pine);border-radius:2px;display:inline-block"></span>Masuk</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:var(--sage);border-radius:2px;display:inline-block"></span>Keluar</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hd"><div class="card-ttl"><span class="ttl-dot" style="background:var(--gold)"></span>Ringkasan</div></div>
+          <div class="card-bd"><div class="sum-grid" id="sum-grid"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd"><div class="card-ttl"><span class="ttl-dot" style="background:var(--earth)"></span>Rekap Per Bulan</div><button class="btn btn-ghost btn-sm" onclick="window.print()">🖨 Cetak</button></div>
+        <div class="tbl-wrap"><table class="dtbl"><thead><tr><th>Bulan</th><th>Surat Masuk</th><th>Surat Keluar</th><th>Total</th><th>Pending</th><th>Selesai</th><th>File</th></tr></thead><tbody id="tb-rekap"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- ═══ ARSIP ═══ -->
+    <div class="page" id="page-arsip">
+      <div class="card">
+        <div class="card-hd"><div class="card-ttl"><span class="ttl-dot" style="background:var(--earth)"></span>Arsip Surat</div></div>
+        <div style="padding:14px 20px;border-bottom:1px solid var(--ghost)">
+          <div class="tabs"><button class="tab-btn active" onclick="switchTab('masuk',this)">📥 Surat Masuk</button><button class="tab-btn" onclick="switchTab('keluar',this)">📤 Surat Keluar</button></div>
+        </div>
+        <div id="arsip-masuk" class="tab-pane active"><div class="tbl-wrap"><table class="dtbl"><thead><tr><th>No.</th><th>No. Agenda</th><th>No. Surat</th><th>Tanggal</th><th>Asal</th><th>Perihal</th><th>File</th><th>Status</th></tr></thead><tbody id="arsip-tb-masuk"></tbody></table></div></div>
+        <div id="arsip-keluar" class="tab-pane"><div class="tbl-wrap"><table class="dtbl"><thead><tr><th>No.</th><th>No. Agenda</th><th>No. Surat</th><th>Tanggal</th><th>Tujuan</th><th>Perihal</th><th>File</th><th>Status</th></tr></thead><tbody id="arsip-tb-keluar"></tbody></table></div></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- ═══════════ MODAL SURAT MASUK ═══════════ -->
+<div class="backdrop" id="m-masuk">
+  <div class="modal modal-lg">
+    <div class="modal-hd">
+      <div class="modal-ttl"><div class="modal-ttl-ico" style="background:var(--ok-lt)">📥</div><span id="m-masuk-ttl">Tambah Surat Masuk</span></div>
+      <button class="mclose" onclick="closeModal('m-masuk')">✕</button>
+    </div>
+    <div class="modal-bd">
+      <div class="fg">
+        <div class="fi"><label class="fl">No. Agenda</label><input class="fc" id="fm-agenda" readonly style="background:var(--ghost);color:var(--mist)"></div>
+        <div class="fi"><label class="fl">No. Surat <span class="req">*</span></label><input class="fc" id="fm-nosurat" placeholder="Misal: 600/PKP/001/2025"></div>
+        <div class="fi"><label class="fl">Tanggal Terima <span class="req">*</span></label><input type="date" class="fc" id="fm-tgl"></div>
+        <div class="fi"><label class="fl">Tanggal Surat</label><input type="date" class="fc" id="fm-tglsurat"></div>
+        <div class="fi"><label class="fl">Asal Surat <span class="req">*</span></label><input class="fc" id="fm-asal" placeholder="Nama instansi/perorangan pengirim"></div>
+        <div class="fi"><label class="fl">Sifat Surat</label><select class="fc" id="fm-sifat"><option>Biasa</option><option>Rahasia</option><option>Sangat Rahasia</option><option>Terbatas</option></select></div>
+        <div class="fi"><label class="fl">Prioritas</label><select class="fc" id="fm-prioritas"><option>Biasa</option><option>Penting</option><option>Segera</option><option>Sangat Segera</option></select></div>
+        <div class="fi"><label class="fl">Ditujukan Kepada</label><input class="fc" id="fm-ditujukan" placeholder="Kepala Bidang / Staf terkait"></div>
+        <div class="fi full"><label class="fl">Perihal <span class="req">*</span></label><input class="fc" id="fm-perihal" placeholder="Isi perihal surat masuk"></div>
+        <div class="fi"><label class="fl">Status</label><select class="fc" id="fm-status"><option>Belum Diproses</option><option>Sedang Diproses</option><option>Selesai</option></select></div>
+        <div class="fi"><label class="fl">Keterangan Lampiran</label><input class="fc" id="fm-lamp" placeholder="Misal: 2 lembar, 1 berkas"></div>
+        <div class="fi full"><label class="fl">Catatan</label><textarea class="fc" id="fm-ket" placeholder="Catatan tambahan (opsional)"></textarea></div>
+        <div class="fi full">
+          <label class="fl">📎 File Lampiran <span style="text-transform:none;font-weight:400;color:var(--mist)">(PDF, Word, Excel, Gambar — maks 10MB)</span></label>
+          <div class="upzone" id="upz-masuk" ondragover="onDragOver(event,'masuk')" ondragleave="onDragLeave(event,'masuk')" ondrop="onDrop(event,'masuk')">
+            <input type="file" id="fi-masuk" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.txt" onchange="onFileSelect(event,'masuk')">
+            <div class="upzone-ico">📂</div>
+            <div class="upzone-txt"><strong>Klik untuk memilih file</strong> atau seret &amp; lepas di sini</div>
+            <div class="upzone-hint">PDF · Word · Excel · Gambar — bisa pilih banyak file sekaligus</div>
+          </div>
+          <div class="flist" id="fl-masuk"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-ghost" onclick="closeModal('m-masuk')">Batal</button>
+      <button class="btn btn-primary" onclick="saveSurat('masuk')">💾 Simpan Surat Masuk</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL SURAT KELUAR ═══════════ -->
+<div class="backdrop" id="m-keluar">
+  <div class="modal modal-lg">
+    <div class="modal-hd">
+      <div class="modal-ttl"><div class="modal-ttl-ico" style="background:var(--ok-lt)">📤</div><span id="m-keluar-ttl">Tambah Surat Keluar</span></div>
+      <button class="mclose" onclick="closeModal('m-keluar')">✕</button>
+    </div>
+    <div class="modal-bd">
+      <div class="fg">
+        <div class="fi"><label class="fl">No. Agenda</label><input class="fc" id="fk-agenda" readonly style="background:var(--ghost);color:var(--mist)"></div>
+        <div class="fi"><label class="fl">No. Surat <span class="req">*</span></label><input class="fc" id="fk-nosurat" placeholder="Misal: 600/PKP/001/2025"></div>
+        <div class="fi"><label class="fl">Tanggal Surat <span class="req">*</span></label><input type="date" class="fc" id="fk-tgl"></div>
+        <div class="fi"><label class="fl">Sifat Surat</label><select class="fc" id="fk-sifat"><option>Biasa</option><option>Rahasia</option><option>Sangat Rahasia</option><option>Terbatas</option></select></div>
+        <div class="fi full"><label class="fl">Tujuan Surat <span class="req">*</span></label><input class="fc" id="fk-tujuan" placeholder="Nama instansi/pihak yang dituju"></div>
+        <div class="fi full"><label class="fl">Perihal <span class="req">*</span></label><input class="fc" id="fk-perihal" placeholder="Isi perihal surat keluar"></div>
+        <div class="fi"><label class="fl">Penandatangan</label><input class="fc" id="fk-ttd" placeholder="Nama pejabat penandatangan"></div>
+        <div class="fi"><label class="fl">Jabatan</label><input class="fc" id="fk-jabatan" placeholder="Kepala Bidang PKP / Kepala Dinas"></div>
+        <div class="fi"><label class="fl">Status</label><select class="fc" id="fk-status"><option>Konsep</option><option>Dikirim</option><option>Selesai</option></select></div>
+        <div class="fi"><label class="fl">Keterangan Lampiran</label><input class="fc" id="fk-lamp" placeholder="Misal: 1 berkas, 3 lembar"></div>
+        <div class="fi full"><label class="fl">Catatan</label><textarea class="fc" id="fk-ket" placeholder="Catatan tambahan (opsional)"></textarea></div>
+        <div class="fi full">
+          <label class="fl">📎 File Lampiran <span style="text-transform:none;font-weight:400;color:var(--mist)">(PDF, Word, Excel, Gambar — maks 10MB)</span></label>
+          <div class="upzone" id="upz-keluar" ondragover="onDragOver(event,'keluar')" ondragleave="onDragLeave(event,'keluar')" ondrop="onDrop(event,'keluar')">
+            <input type="file" id="fi-keluar" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.txt" onchange="onFileSelect(event,'keluar')">
+            <div class="upzone-ico">📂</div>
+            <div class="upzone-txt"><strong>Klik untuk memilih file</strong> atau seret &amp; lepas di sini</div>
+            <div class="upzone-hint">PDF · Word · Excel · Gambar — bisa pilih banyak file sekaligus</div>
+          </div>
+          <div class="flist" id="fl-keluar"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn btn-ghost" onclick="closeModal('m-keluar')">Batal</button>
+      <button class="btn btn-green" onclick="saveSurat('keluar')">💾 Simpan Surat Keluar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL DETAIL ═══════════ -->
+<div class="backdrop" id="m-detail">
+  <div class="modal modal-lg">
+    <div class="modal-hd"><div class="modal-ttl" id="det-ttl">📋 Detail Surat</div><button class="mclose" onclick="closeModal('m-detail')">✕</button></div>
+    <div class="modal-bd" id="det-body"></div>
+    <div class="modal-ft"><button class="btn btn-ghost" onclick="closeModal('m-detail')">Tutup</button></div>
+  </div>
+</div>
+
+<!-- ═══════════ MODAL PREVIEW FILE ═══════════ -->
+<div class="backdrop" id="m-preview">
+  <div class="modal modal-lg">
+    <div class="modal-hd"><div class="modal-ttl" id="prev-ttl">👁 Preview</div><button class="mclose" onclick="closeModal('m-preview')">✕</button></div>
+    <div class="modal-bd" id="prev-body" style="padding:16px"></div>
+    <div class="modal-ft"><button class="btn btn-ghost" onclick="closeModal('m-preview')">Tutup</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<script>
+// ════════════════════════════════ DATA ════════════════════════════════
+let DM = JSON.parse(localStorage.getItem('pkp_masuk')||'[]');
+let DK = JSON.parse(localStorage.getItem('pkp_keluar')||'[]');
+let pendFiles = {masuk:[],keluar:[]};
+let editMode = {type:null,id:null};
+let filt = {masuk:{q:'',status:'',priority:''},keluar:{q:'',status:''}};
+
+// ════════════════════════════════ FILE HELPERS ════════════════════════════════
+const fileIcon = n=>{const e=(n.split('.').pop()||'').toLowerCase();if(e==='pdf')return'📄';if(['doc','docx'].includes(e))return'📝';if(['xls','xlsx'].includes(e))return'📊';if(['png','jpg','jpeg','gif','webp'].includes(e))return'🖼️';return'📎'};
+const fileBg   = n=>{const e=(n.split('.').pop()||'').toLowerCase();if(e==='pdf')return'#FEE2E2';if(['doc','docx'].includes(e))return'#DBEAFE';if(['xls','xlsx'].includes(e))return'#DCFCE7';if(['png','jpg','jpeg','gif'].includes(e))return'#EDE9FE';return'#F1F5F9'};
+const fmtSz    = b=>b<1024?b+' B':b<1048576?(b/1024).toFixed(1)+' KB':(b/1048576).toFixed(1)+' MB';
+const canPrev  = n=>{const e=(n.split('.').pop()||'').toLowerCase();return['png','jpg','jpeg','gif','webp','pdf'].includes(e)};
+
+// ════════════════════════════════ FILE UPLOAD ════════════════════════════════
+const onDragOver  = (e,t)=>{e.preventDefault();document.getElementById('upz-'+t).classList.add('drag')};
+const onDragLeave = (e,t)=>document.getElementById('upz-'+t).classList.remove('drag');
+const onDrop      = (e,t)=>{e.preventDefault();document.getElementById('upz-'+t).classList.remove('drag');addFiles([...e.dataTransfer.files],t)};
+const onFileSelect= (e,t)=>{addFiles([...e.target.files],t);e.target.value=''};
+
+function addFiles(files,type){
+  files.forEach(file=>{
+    if(file.size>10*1024*1024){showToast(file.name+' melebihi batas 10MB','err');return}
+    const r=new FileReader();
+    r.onload=ev=>{pendFiles[type].push({name:file.name,size:file.size,type:file.type,data:ev.target.result,uid:Date.now()+Math.random()});renderPend(type)};
+    r.readAsDataURL(file);
+  });
+}
+function renderPend(type){
+  const el=document.getElementById('fl-'+type);
+  const files=pendFiles[type];
+  if(!files.length){el.innerHTML='';return}
+  el.innerHTML=files.map((f,i)=>`<div class="fitem">
+    <div class="fitem-ic" style="background:${fileBg(f.name)}">${fileIcon(f.name)}</div>
+    <div class="fitem-info"><div class="fitem-name">${f.name}</div><div class="fitem-sz">${fmtSz(f.size)}</div></div>
+    <button class="fdel" onclick="removePend('${type}',${i})">✕</button>
+  </div>`).join('');
+}
+function removePend(type,i){pendFiles[type].splice(i,1);renderPend(type)}
+
+// ════════════════════════════════ INIT ════════════════════════════════
+function init(){
+  setDate();
+  if(!DM.length&&!DK.length) seedData();
+  setAg();
+  renderAll();
+}
+function setDate(){
+  const n=new Date();
+  document.getElementById('cur-date').textContent=n.toLocaleDateString('id-ID',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  const t=n.toISOString().split('T')[0];
+  ['fm-tgl','fm-tglsurat','fk-tgl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=t});
+}
+function seedData(){
+  const n=new Date();const y=n.getFullYear();const m=String(n.getMonth()+1).padStart(2,'0');
+  DM=[
+    {id:1,agenda:'SM-001/'+y,nosurat:'001/PUPR/PKP/'+y,tanggal:y+'-'+m+'-03',tglsurat:y+'-'+m+'-02',asal:'Bupati Kapuas Hulu',perihal:'Undangan Rapat Koordinasi Program Perumahan Rakyat',sifat:'Biasa',prioritas:'Segera',ditujukan:'Kepala Bidang PKP',status:'Selesai',lampiran:'1 berkas',keterangan:'',files:[]},
+    {id:2,agenda:'SM-002/'+y,nosurat:'002/Kemen.PUPR/'+y,tanggal:y+'-'+m+'-07',tglsurat:y+'-'+m+'-05',asal:'Kementerian PUPR RI',perihal:'Petunjuk Teknis Bantuan Stimulan Perumahan Swadaya',sifat:'Biasa',prioritas:'Penting',ditujukan:'Kepala Dinas PerkimTanLH',status:'Sedang Diproses',lampiran:'1 buku + CD',keterangan:'Perlu dipelajari sebelum rapat',files:[]},
+    {id:3,agenda:'SM-003/'+y,nosurat:'003/BPN/KPH/'+y,tanggal:y+'-'+m+'-10',tglsurat:y+'-'+m+'-09',asal:'BPN Kabupaten Kapuas Hulu',perihal:'Permohonan Data Kawasan Permukiman untuk Sertipikasi',sifat:'Biasa',prioritas:'Biasa',ditujukan:'Staf Bidang PKP',status:'Belum Diproses',lampiran:'-',keterangan:'Menunggu disposisi',files:[]},
+  ];
+  DK=[
+    {id:1,agenda:'SK-001/'+y,nosurat:'600/PKP/001/'+y,tanggal:y+'-'+m+'-04',tujuan:'Kepala Dinas PUPR Prov. Kalimantan Barat',perihal:'Laporan Capaian Program Rumah Tidak Layak Huni Tahun '+y,sifat:'Biasa',ttd:'Kepala Bidang PKP',jabatan:'Kepala Bidang PKP',lampiran:'1 laporan PDF',status:'Selesai',keterangan:'',files:[]},
+    {id:2,agenda:'SK-002/'+y,nosurat:'600/PKP/002/'+y,tanggal:y+'-'+m+'-09',tujuan:'Seluruh Camat se-Kabupaten Kapuas Hulu',perihal:'Surat Edaran Pendataan Rumah Tidak Layak Huni',sifat:'Biasa',ttd:'Kepala Dinas PerkimTanLH',jabatan:'Kepala Dinas',lampiran:'Form pendataan',status:'Dikirim',keterangan:'',files:[]},
+  ];
+  saveDt();
+}
+function saveDt(){try{localStorage.setItem('pkp_masuk',JSON.stringify(DM));localStorage.setItem('pkp_keluar',JSON.stringify(DK))}catch(e){showToast('Penyimpanan penuh','err')}}
+function setAg(){
+  const y=new Date().getFullYear();
+  const em=document.getElementById('fm-agenda');const ek=document.getElementById('fk-agenda');
+  if(em&&!editMode.id)em.value='SM-'+String(DM.length+1).padStart(3,'0')+'/'+y;
+  if(ek&&!editMode.id)ek.value='SK-'+String(DK.length+1).padStart(3,'0')+'/'+y;
+}
+
+// ════════════════════════════════ RENDER ════════════════════════════════
+function renderAll(){renderMasuk();renderKeluar();renderDash()}
+
+function sbadge(s,t){
+  if(t==='masuk'){if(s==='Belum Diproses')return`<span class="badge b-red">⏳ ${s}</span>`;if(s==='Sedang Diproses')return`<span class="badge b-sky">🔄 ${s}</span>`;if(s==='Selesai')return`<span class="badge b-green">✅ ${s}</span>`}
+  else{if(s==='Konsep')return`<span class="badge b-gray">📝 ${s}</span>`;if(s==='Dikirim')return`<span class="badge b-sky">📬 ${s}</span>`;if(s==='Selesai')return`<span class="badge b-green">✅ ${s}</span>`}
+  return`<span class="badge b-gray">${s}</span>`;
+}
+function pbadge(p){if(p==='Sangat Segera')return`<span class="badge b-red">🔴 ${p}</span>`;if(p==='Segera')return`<span class="badge b-gold">🟠 ${p}</span>`;if(p==='Penting')return`<span class="badge b-sky">🔵 ${p}</span>`;return`<span class="badge b-gray">⚪ ${p}</span>`}
+function sifbadge(s){if(s==='Rahasia'||s==='Sangat Rahasia')return`<span class="badge b-red">🔒 ${s}</span>`;if(s==='Terbatas')return`<span class="badge b-gold">⚠️ ${s}</span>`;return`<span class="badge b-gray">${s}</span>`}
+function fbadge(f){if(!f||!f.length)return`<span style="color:var(--fog)">—</span>`;return`<span class="fbadge">📎 ${f.length} file</span>`}
+
+function renderMasuk(){
+  const tb=document.getElementById('tb-masuk');const f=filt.masuk;
+  let rows=DM.filter(d=>{const q=f.q.toLowerCase();return(!q||[d.agenda,d.nosurat,d.asal,d.perihal].join(' ').toLowerCase().includes(q))&&(!f.status||d.status===f.status)&&(!f.priority||d.prioritas===f.priority)});
+  document.getElementById('cnt-masuk').textContent=rows.length;
+  if(!rows.length){tb.innerHTML='<tr class="no-row"><td colspan="10">Tidak ada data</td></tr>';return}
+  tb.innerHTML=rows.map(d=>`<tr>
+    <td>${d.agenda}</td>
+    <td style="font-size:11.5px;color:var(--mist);font-family:'JetBrains Mono',monospace">${d.nosurat}</td>
+    <td style="white-space:nowrap">${fmtD(d.tanggal)}</td>
+    <td>${d.asal}</td>
+    <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${d.perihal}">${d.perihal}</td>
+    <td>${sifbadge(d.sifat)}</td>
+    <td>${pbadge(d.prioritas)}</td>
+    <td>${sbadge(d.status,'masuk')}</td>
+    <td onclick="viewDetail('masuk',${d.id})">${fbadge(d.files)}</td>
+    <td><div class="act-cell">
+      <button class="abtn abtn-view" onclick="viewDetail('masuk',${d.id})">👁 Lihat</button>
+      <button class="abtn abtn-edit" onclick="editSurat('masuk',${d.id})">✏</button>
+      <button class="abtn abtn-del" onclick="delSurat('masuk',${d.id})">🗑</button>
+    </div></td>
+  </tr>`).join('');
+}
+function renderKeluar(){
+  const tb=document.getElementById('tb-keluar');const f=filt.keluar;
+  let rows=DK.filter(d=>{const q=f.q.toLowerCase();return(!q||[d.agenda,d.nosurat,d.tujuan,d.perihal].join(' ').toLowerCase().includes(q))&&(!f.status||d.status===f.status)});
+  document.getElementById('cnt-keluar').textContent=rows.length;
+  if(!rows.length){tb.innerHTML='<tr class="no-row"><td colspan="10">Tidak ada data</td></tr>';return}
+  tb.innerHTML=rows.map(d=>`<tr>
+    <td>${d.agenda}</td>
+    <td style="font-size:11.5px;color:var(--mist);font-family:'JetBrains Mono',monospace">${d.nosurat}</td>
+    <td style="white-space:nowrap">${fmtD(d.tanggal)}</td>
+    <td>${d.tujuan}</td>
+    <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${d.perihal}">${d.perihal}</td>
+    <td>${sifbadge(d.sifat)}</td>
+    <td style="font-size:12.5px">${d.ttd||'—'}</td>
+    <td>${sbadge(d.status,'keluar')}</td>
+    <td onclick="viewDetail('keluar',${d.id})">${fbadge(d.files)}</td>
+    <td><div class="act-cell">
+      <button class="abtn abtn-view" onclick="viewDetail('keluar',${d.id})">👁 Lihat</button>
+      <button class="abtn abtn-edit" onclick="editSurat('keluar',${d.id})">✏</button>
+      <button class="abtn abtn-del" onclick="delSurat('keluar',${d.id})">🗑</button>
+    </div></td>
+  </tr>`).join('');
+}
+function renderDash(){
+  const pend=DM.filter(d=>d.status==='Belum Diproses').length;
+  const done=DM.filter(d=>d.status==='Selesai').length+DK.filter(d=>d.status==='Selesai').length;
+  const urg=DM.filter(d=>d.prioritas==='Sangat Segera'||d.prioritas==='Segera').length;
+  const files=[...DM,...DK].reduce((a,d)=>a+(d.files?d.files.length:0),0);
+  const n=new Date();const mo=String(n.getMonth()+1).padStart(2,'0');const yr=String(n.getFullYear());
+  const bulan=DM.filter(d=>d.tanggal&&d.tanggal.startsWith(yr+'-'+mo)).length+DK.filter(d=>d.tanggal&&d.tanggal.startsWith(yr+'-'+mo)).length;
+  ['h-total','s-masuk','qs-m'].forEach(id=>setEl(id,DM.length+DK.length));
+  document.getElementById('h-total').textContent=DM.length+DK.length;
+  document.getElementById('h-bulan').textContent=bulan;
+  document.getElementById('s-masuk').textContent=DM.length;
+  document.getElementById('s-keluar').textContent=DK.length;
+  document.getElementById('s-pending').textContent=pend;
+  document.getElementById('s-files').textContent=files;
+  document.getElementById('qs-m').textContent=DM.length;
+  document.getElementById('qs-k').textContent=DK.length;
+  document.getElementById('qs-p').textContent=pend;
+  document.getElementById('qs-s').textContent=done;
+  document.getElementById('qs-u').textContent=urg;
+  document.getElementById('badge-masuk').textContent=pend||'0';
+  const all=[...DM.slice(-6).map(d=>({...d,_t:'masuk'})),...DK.slice(-6).map(d=>({...d,_t:'keluar'}))].sort((a,b)=>(b.tanggal||'').localeCompare(a.tanggal||'')).slice(0,8);
+  const al=document.getElementById('act-list');
+  if(!all.length){al.innerHTML='<div style="text-align:center;padding:40px;color:var(--mist)">📭 Belum ada aktivitas</div>';return}
+  al.innerHTML=all.map(d=>`<div class="act-item">
+    <div class="act-icon" style="background:${d._t==='masuk'?'var(--ok-lt)':'var(--warn-lt)'}">${d._t==='masuk'?'📥':'📤'}</div>
+    <div class="act-info">
+      <p>${d._t==='masuk'?'Dari '+d.asal:'Ke '+d.tujuan} — ${d.perihal}</p>
+      <span>${fmtD(d.tanggal)} · ${d.agenda}${d.files&&d.files.length?' · 📎 '+d.files.length+' file':''} · ${sbadge(d.status,d._t)}</span>
+    </div>
+  </div>`).join('');
+}
+function setEl(id,v){const el=document.getElementById(id);if(el)el.textContent=v}
+
+function renderRekap(){
+  const mths=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const y=new Date().getFullYear();
+  const rd=mths.map((mn,i)=>{
+    const m=String(i+1).padStart(2,'0');const pfx=y+'-'+m;
+    const masuk=DM.filter(d=>d.tanggal&&d.tanggal.startsWith(pfx)).length;
+    const keluar=DK.filter(d=>d.tanggal&&d.tanggal.startsWith(pfx)).length;
+    const pend=DM.filter(d=>d.tanggal&&d.tanggal.startsWith(pfx)&&d.status==='Belum Diproses').length;
+    const sel=DM.filter(d=>d.tanggal&&d.tanggal.startsWith(pfx)&&d.status==='Selesai').length+DK.filter(d=>d.tanggal&&d.tanggal.startsWith(pfx)&&d.status==='Selesai').length;
+    const fc=[...DM,...DK].filter(d=>d.tanggal&&d.tanggal.startsWith(pfx)).reduce((a,d)=>a+(d.files?d.files.length:0),0);
+    return{mn,masuk,keluar,pend,sel,fc};
+  });
+  const mx=Math.max(...rd.map(r=>r.masuk+r.keluar),1);
+  document.getElementById('chart-bars').innerHTML=rd.map(r=>{
+    const hM=Math.round((r.masuk/mx)*90);const hK=Math.round((r.keluar/mx)*90);
+    return`<div class="bar-col">
+      <div class="bar-grp">
+        <div class="bar" style="flex:1;height:${hM}px;background:var(--pine)" title="${r.mn}: ${r.masuk} masuk"></div>
+        <div class="bar" style="flex:1;height:${hK}px;background:var(--sage)" title="${r.mn}: ${r.keluar} keluar"></div>
+      </div>
+      <div class="bar-lbl">${r.mn.substring(0,3)}</div>
+    </div>`;
+  }).join('');
+  const tM=DM.length,tK=DK.length,tF=[...DM,...DK].reduce((a,d)=>a+(d.files?d.files.length:0),0);
+  document.getElementById('sum-grid').innerHTML=`
+    <div class="sum-box" style="background:var(--ok-lt);border-color:var(--mint)"><div class="sum-n" style="color:var(--pine)">${tM}</div><div class="sum-l">Surat Masuk</div></div>
+    <div class="sum-box" style="background:var(--warn-lt);border-color:#fde68a"><div class="sum-n" style="color:var(--warn)">${tK}</div><div class="sum-l">Surat Keluar</div></div>
+    <div class="sum-box" style="background:var(--ghost);border-color:var(--fog)"><div class="sum-n" style="color:var(--ink)">${tM+tK}</div><div class="sum-l">Total Surat</div></div>
+    <div class="sum-box" style="background:#EDE9FE;border-color:#ddd6fe"><div class="sum-n" style="color:#6D28D9">${tF}</div><div class="sum-l">Total File</div></div>`;
+  document.getElementById('tb-rekap').innerHTML=rd.map(r=>`<tr><td>${r.mn} ${y}</td><td style="color:var(--pine);font-weight:600">${r.masuk}</td><td style="color:var(--moss);font-weight:600">${r.keluar}</td><td><strong>${r.masuk+r.keluar}</strong></td><td style="color:var(--warn)">${r.pend}</td><td style="color:var(--pine)">${r.sel}</td><td style="color:#6D28D9">${r.fc}</td></tr>`).join('');
+}
+function renderArsip(){
+  const bM=document.getElementById('arsip-tb-masuk');const bK=document.getElementById('arsip-tb-keluar');
+  bM.innerHTML=DM.length?DM.map((d,i)=>`<tr><td>${i+1}</td><td>${d.agenda}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11.5px">${d.nosurat}</td><td>${fmtD(d.tanggal)}</td><td>${d.asal}</td><td>${d.perihal}</td><td>${fbadge(d.files)}</td><td>${sbadge(d.status,'masuk')}</td></tr>`).join(''):'<tr class="no-row"><td colspan="8">Belum ada arsip</td></tr>';
+  bK.innerHTML=DK.length?DK.map((d,i)=>`<tr><td>${i+1}</td><td>${d.agenda}</td><td style="font-family:'JetBrains Mono',monospace;font-size:11.5px">${d.nosurat}</td><td>${fmtD(d.tanggal)}</td><td>${d.tujuan}</td><td>${d.perihal}</td><td>${fbadge(d.files)}</td><td>${sbadge(d.status,'keluar')}</td></tr>`).join(''):'<tr class="no-row"><td colspan="8">Belum ada arsip</td></tr>';
+}
+
+// ════════════════════════════════ SAVE ════════════════════════════════
+function saveSurat(type){
+  if(type==='masuk'){
+    const ns=document.getElementById('fm-nosurat').value.trim();
+    const asal=document.getElementById('fm-asal').value.trim();
+    const perihal=document.getElementById('fm-perihal').value.trim();
+    const tgl=document.getElementById('fm-tgl').value;
+    if(!ns||!asal||!perihal||!tgl){showToast('Harap isi semua field wajib (*)','err');return}
+    const newF=pendFiles.masuk.slice();
+    if(editMode.type==='masuk'&&editMode.id){
+      const idx=DM.findIndex(d=>d.id===editMode.id);
+      if(idx>-1){const ex=DM[idx].files||[];DM[idx]={...DM[idx],nosurat:ns,asal,perihal,tanggal:tgl,tglsurat:document.getElementById('fm-tglsurat').value,sifat:document.getElementById('fm-sifat').value,prioritas:document.getElementById('fm-prioritas').value,ditujukan:document.getElementById('fm-ditujukan').value,status:document.getElementById('fm-status').value,lampiran:document.getElementById('fm-lamp').value,keterangan:document.getElementById('fm-ket').value,files:[...ex,...newF]}}
+      editMode={type:null,id:null};showToast('Surat masuk diperbarui','ok');
+    } else {
+      const y=new Date().getFullYear();const ag='SM-'+String(DM.length+1).padStart(3,'0')+'/'+y;
+      DM.push({id:Date.now(),agenda:ag,nosurat:ns,asal,perihal,tanggal:tgl,tglsurat:document.getElementById('fm-tglsurat').value,sifat:document.getElementById('fm-sifat').value,prioritas:document.getElementById('fm-prioritas').value,ditujukan:document.getElementById('fm-ditujukan').value,status:document.getElementById('fm-status').value,lampiran:document.getElementById('fm-lamp').value,keterangan:document.getElementById('fm-ket').value,files:newF});
+      showToast('Surat masuk berhasil disimpan','ok');
+    }
+  } else {
+    const ns=document.getElementById('fk-nosurat').value.trim();
+    const tujuan=document.getElementById('fk-tujuan').value.trim();
+    const perihal=document.getElementById('fk-perihal').value.trim();
+    const tgl=document.getElementById('fk-tgl').value;
+    if(!ns||!tujuan||!perihal||!tgl){showToast('Harap isi semua field wajib (*)','err');return}
+    const newF=pendFiles.keluar.slice();
+    if(editMode.type==='keluar'&&editMode.id){
+      const idx=DK.findIndex(d=>d.id===editMode.id);
+      if(idx>-1){const ex=DK[idx].files||[];DK[idx]={...DK[idx],nosurat:ns,tujuan,perihal,tanggal:tgl,sifat:document.getElementById('fk-sifat').value,ttd:document.getElementById('fk-ttd').value,jabatan:document.getElementById('fk-jabatan').value,lampiran:document.getElementById('fk-lamp').value,status:document.getElementById('fk-status').value,keterangan:document.getElementById('fk-ket').value,files:[...ex,...newF]}}
+      editMode={type:null,id:null};showToast('Surat keluar diperbarui','ok');
+    } else {
+      const y=new Date().getFullYear();const ag='SK-'+String(DK.length+1).padStart(3,'0')+'/'+y;
+      DK.push({id:Date.now(),agenda:ag,nosurat:ns,tujuan,perihal,tanggal:tgl,sifat:document.getElementById('fk-sifat').value,ttd:document.getElementById('fk-ttd').value,jabatan:document.getElementById('fk-jabatan').value,lampiran:document.getElementById('fk-lamp').value,status:document.getElementById('fk-status').value,keterangan:document.getElementById('fk-ket').value,files:newF});
+      showToast('Surat keluar berhasil disimpan','ok');
+    }
+  }
+  pendFiles[type]=[];saveDt();closeModal('m-'+type);setAg();renderAll();clearForm(type);
+}
+
+function clearForm(type){
+  if(type==='masuk'){['fm-nosurat','fm-tglsurat','fm-asal','fm-ditujukan','fm-perihal','fm-ket','fm-lamp'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});['fm-sifat','fm-prioritas','fm-status'].forEach(id=>{const e=document.getElementById(id);if(e)e.selectedIndex=0})}
+  else{['fk-nosurat','fk-tujuan','fk-perihal','fk-ttd','fk-jabatan','fk-lamp','fk-ket'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});['fk-sifat','fk-status'].forEach(id=>{const e=document.getElementById(id);if(e)e.selectedIndex=0})}
+  pendFiles[type]=[];renderPend(type);setDate();setAg();
+}
+
+function delSurat(type,id){
+  if(!confirm('Hapus surat ini beserta file lampirannya?'))return;
+  if(type==='masuk')DM=DM.filter(d=>d.id!==id);else DK=DK.filter(d=>d.id!==id);
+  saveDt();renderAll();showToast('Surat berhasil dihapus','ok');
+}
+
+function editSurat(type,id){
+  editMode={type,id};pendFiles[type]=[];
+  if(type==='masuk'){
+    const d=DM.find(d=>d.id===id);if(!d)return;
+    ['agenda','nosurat','tgl','tglsurat','asal','perihal','ditujukan','lamp','ket'].forEach(k=>{const el=document.getElementById('fm-'+k);if(el)el.value=d[k==='tgl'?'tanggal':k==='tglsurat'?'tglsurat':k]||''});
+    document.getElementById('fm-sifat').value=d.sifat;document.getElementById('fm-prioritas').value=d.prioritas;document.getElementById('fm-status').value=d.status;
+    renderPend('masuk');document.getElementById('m-masuk-ttl').textContent='✏ Edit Surat Masuk';openModal('m-masuk');
+  } else {
+    const d=DK.find(d=>d.id===id);if(!d)return;
+    ['agenda','nosurat','tujuan','perihal','ttd','jabatan','lamp','ket'].forEach(k=>{const el=document.getElementById('fk-'+k);if(el)el.value=d[k]||''});
+    document.getElementById('fk-status').value=d.status;
+    renderPend('keluar');document.getElementById('m-keluar-ttl').textContent='✏ Edit Surat Keluar';openModal('m-keluar');
+  }
+}
+
+// ════════════════════════════════ DETAIL ════════════════════════════════
+function viewDetail(type,id){
+  const d=type==='masuk'?DM.find(x=>x.id===id):DK.find(x=>x.id===id);if(!d)return;
+  const isM=type==='masuk';
+  document.getElementById('det-ttl').innerHTML=`<div class="modal-ttl-ico" style="background:${isM?'var(--ok-lt)':'var(--warn-lt)'}">${isM?'📥':'📤'}</div> Detail Surat ${isM?'Masuk':'Keluar'}`;
+  const accent=isM?'var(--pine)':'var(--moss)';const accentBg=isM?'var(--ok-lt)':'#e6f5ec';
+  const fields=isM?`
+    <div class="det-item"><div class="det-lbl">Nomor Surat</div><div class="det-val" style="font-family:'JetBrains Mono',monospace">${d.nosurat}</div></div>
+    <div class="det-item"><div class="det-lbl">Tanggal Terima</div><div class="det-val">${fmtD(d.tanggal)}</div></div>
+    <div class="det-item"><div class="det-lbl">Tanggal Surat</div><div class="det-val">${fmtD(d.tglsurat)||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Asal Surat</div><div class="det-val">${d.asal}</div></div>
+    <div class="det-item full"><div class="det-lbl">Perihal</div><div class="det-val">${d.perihal}</div></div>
+    <div class="det-item"><div class="det-lbl">Sifat</div><div class="det-val">${sifbadge(d.sifat)}</div></div>
+    <div class="det-item"><div class="det-lbl">Prioritas</div><div class="det-val">${pbadge(d.prioritas)}</div></div>
+    <div class="det-item"><div class="det-lbl">Ditujukan Kepada</div><div class="det-val">${d.ditujukan||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Keterangan Lampiran</div><div class="det-val">${d.lampiran||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Status</div><div class="det-val">${sbadge(d.status,'masuk')}</div></div>
+    ${d.keterangan?`<div class="det-item full"><div class="det-lbl">Catatan</div><div class="det-val">${d.keterangan}</div></div>`:''}
+  `:`
+    <div class="det-item"><div class="det-lbl">Nomor Surat</div><div class="det-val" style="font-family:'JetBrains Mono',monospace">${d.nosurat}</div></div>
+    <div class="det-item"><div class="det-lbl">Tanggal Surat</div><div class="det-val">${fmtD(d.tanggal)}</div></div>
+    <div class="det-item full"><div class="det-lbl">Tujuan</div><div class="det-val">${d.tujuan}</div></div>
+    <div class="det-item full"><div class="det-lbl">Perihal</div><div class="det-val">${d.perihal}</div></div>
+    <div class="det-item"><div class="det-lbl">Sifat</div><div class="det-val">${sifbadge(d.sifat)}</div></div>
+    <div class="det-item"><div class="det-lbl">Status</div><div class="det-val">${sbadge(d.status,'keluar')}</div></div>
+    <div class="det-item"><div class="det-lbl">Penandatangan</div><div class="det-val">${d.ttd||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Jabatan</div><div class="det-val">${d.jabatan||'—'}</div></div>
+    <div class="det-item"><div class="det-lbl">Keterangan Lampiran</div><div class="det-val">${d.lampiran||'—'}</div></div>
+    ${d.keterangan?`<div class="det-item full"><div class="det-lbl">Catatan</div><div class="det-val">${d.keterangan}</div></div>`:''}
+  `;
+  const files=d.files||[];
+  const filesHtml=`<div class="att-sec">
+    <div class="att-sec-hd">📎 File Lampiran <span class="fbadge" style="cursor:default">${files.length} file</span></div>
+    ${files.length?`<div class="att-items">${files.map((f,i)=>`<div class="att-item">
+      <div style="width:34px;height:34px;border-radius:8px;background:${fileBg(f.name)};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${fileIcon(f.name)}</div>
+      <div style="flex:1;min-width:0"><div class="att-name">${f.name}</div><div class="att-meta">${fmtSz(f.size)}</div></div>
+      <div class="att-btns">
+        ${canPrev(f.name)?`<button class="att-btn att-prev" onclick="prevFile(${JSON.stringify(f.name)},${JSON.stringify(f.data)})">👁 Preview</button>`:''}
+        <button class="att-btn att-dl" onclick="dlFile(${JSON.stringify(f.name)},${JSON.stringify(f.data)})">⬇ Unduh</button>
+        <button class="att-del" onclick="delFile('${type}',${d.id},${i})">✕</button>
+      </div>
+    </div>`).join('')}</div>`
+    :`<div class="att-empty">📭 Belum ada file lampiran untuk surat ini</div>`}
+  </div>`;
+  document.getElementById('det-body').innerHTML=`
+    <div class="det-banner" style="background:${accentBg};border-color:${accent}">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--mist)">No. Agenda</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:22px;color:${accent};margin-top:2px">${d.agenda}</div>
+    </div>
+    <div class="det-grid">${fields}</div>${filesHtml}`;
+  openModal('m-detail');
+}
+
+function delFile(type,suratId,fi){
+  if(!confirm('Hapus file lampiran ini?'))return;
+  const arr=type==='masuk'?DM:DK;const rec=arr.find(d=>d.id===suratId);
+  if(!rec||!rec.files)return;rec.files.splice(fi,1);saveDt();renderAll();viewDetail(type,suratId);showToast('File dihapus','ok');
+}
+function dlFile(name,data){const a=document.createElement('a');a.href=data;a.download=name;a.click()}
+function prevFile(name,data){
+  const ext=(name.split('.').pop()||'').toLowerCase();
+  document.getElementById('prev-ttl').textContent='👁 '+name;
+  let content='';
+  if(['png','jpg','jpeg','gif','webp'].includes(ext))content=`<img src="${data}" class="prev-img" alt="${name}">`;
+  else if(ext==='pdf')content=`<iframe src="${data}" class="prev-frame" title="${name}"></iframe>`;
+  else content=`<div style="text-align:center;padding:40px;color:var(--mist)"><div style="font-size:48px">${fileIcon(name)}</div><p style="margin-top:12px">Preview tidak tersedia. Silakan unduh file.</p><button class="btn btn-primary" style="margin-top:14px" onclick="dlFile(${JSON.stringify(name)},${JSON.stringify(data)})">⬇ Unduh</button></div>`;
+  document.getElementById('prev-body').innerHTML=content;
+  closeModal('m-detail');openModal('m-preview');
+}
+
+// ════ FILTER ════
+function doFilter(type,v){filt[type].q=v;type==='masuk'?renderMasuk():renderKeluar()}
+function filterStatus(type,v){filt[type].status=v;type==='masuk'?renderMasuk():renderKeluar()}
+function filterPriority(v){filt.masuk.priority=v;renderMasuk()}
+
+// ════ EXPORT ════
+function doExport(type){
+  const data=type==='masuk'?DM:DK;if(!data.length){showToast('Tidak ada data','err');return}
+  let csv=type==='masuk'?'No. Agenda,No. Surat,Tanggal,Asal,Perihal,Sifat,Prioritas,Status,File\n':'No. Agenda,No. Surat,Tanggal,Tujuan,Perihal,Sifat,Penandatangan,Status,File\n';
+  data.forEach(d=>{const fc=d.files?d.files.length:0;csv+=type==='masuk'?`"${d.agenda}","${d.nosurat}","${d.tanggal}","${d.asal}","${d.perihal}","${d.sifat}","${d.prioritas}","${d.status}","${fc}"\n`:`"${d.agenda}","${d.nosurat}","${d.tanggal}","${d.tujuan}","${d.perihal}","${d.sifat}","${d.ttd||''}","${d.status}","${fc}"\n`});
+  const b=new Blob([csv],{type:'text/csv;charset=utf-8;'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`surat_pkp_${type}_${new Date().toISOString().split('T')[0]}.csv`;a.click();URL.revokeObjectURL(u);showToast('Export CSV berhasil','ok');
+}
+
+// ════ MODAL ════
+function openModal(id){
+  if(id==='m-masuk'){document.getElementById('m-masuk-ttl').textContent='Tambah Surat Masuk';if(!editMode.id)clearForm('masuk')}
+  if(id==='m-keluar'){document.getElementById('m-keluar-ttl').textContent='Tambah Surat Keluar';if(!editMode.id)clearForm('keluar')}
+  const el=document.getElementById(id);if(el)el.classList.add('show');
+}
+function closeModal(id){const el=document.getElementById(id);if(el)el.classList.remove('show');if(id!=='m-detail'&&id!=='m-preview')editMode={type:null,id:null}}
+document.querySelectorAll('.backdrop').forEach(el=>el.addEventListener('click',function(e){if(e.target===this)closeModal(this.id)}));
+
+// ════ NAV ════
+function showPage(name,nav){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(nav)nav.classList.add('active');
+  const titles={dashboard:['Dashboard','Ringkasan aktivitas surat masuk & keluar'],masuk:['Surat Masuk','Daftar dan pencatatan surat masuk'],keluar:['Surat Keluar','Daftar dan pencatatan surat keluar'],rekap:['Rekap & Laporan','Laporan rekapitulasi surat'],arsip:['Arsip Surat','Penyimpanan dan arsip surat']};
+  const t=titles[name];document.getElementById('page-title').textContent=t[0];document.getElementById('page-sub').textContent=t[1];
+  if(name==='rekap')renderRekap();if(name==='arsip')renderArsip();
+}
+function switchTab(tab,btn){
+  document.querySelectorAll('#page-arsip .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');document.getElementById('arsip-'+tab).classList.add('active');
+}
+
+// ════ TOAST & UTILS ════
+function showToast(msg,type='ok'){const t=document.getElementById('toast');const m=document.getElementById('toast-msg');t.className='toast show '+type;m.textContent=(type==='ok'?'✅ ':'❌ ')+msg;setTimeout(()=>t.classList.remove('show'),2800)}
+function fmtD(s){if(!s)return'—';const d=new Date(s+'T00:00:00');if(isNaN(d))return s;return d.toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'})}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.backdrop.show').forEach(m=>closeModal(m.id))});
+
+init();
+</script>
+</body>
+</html>

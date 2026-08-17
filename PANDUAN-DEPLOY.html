@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Deploy SiSuRAT PKP ke GitHub Pages</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --forest:#1B4332;--pine:#2D6A4F;--moss:#40916C;--sage:#52B788;--mint:#B7E4C7;
+  --cream:#F0F7F4;--gold:#F4C542;--sand:#D4A96A;--brick:#C1440E;
+  --ink:#0D1B14;--slate:#3D5348;--mist:#8FA89A;--fog:#C8D8CF;--ghost:#E8F2EC;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-size:15px}
+
+.hero{background:linear-gradient(135deg,var(--forest),var(--pine));padding:52px 24px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2352B788' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:20px;padding:6px 16px;font-size:13px;color:rgba(255,255,255,0.8);margin-bottom:18px}
+.hero h1{font-family:'DM Serif Display',serif;font-size:36px;color:white;margin-bottom:10px;position:relative}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:16px;color:rgba(255,255,255,0.65);max-width:560px;margin:0 auto 24px}
+.hero-files{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.hf{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,0.85)}
+
+.container{max-width:860px;margin:0 auto;padding:0 20px}
+
+.section{padding:52px 0}
+.section-label{display:inline-flex;align-items:center;gap:8px;background:var(--ghost);border:1px solid var(--fog);border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;color:var(--pine);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.section h2{font-family:'DM Serif Display',serif;font-size:28px;color:var(--ink);margin-bottom:6px}
+.section-sub{font-size:15px;color:var(--mist);margin-bottom:32px}
+
+/* STEPS */
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:20px;position:relative}
+.step:not(:last-child)::after{content:'';position:absolute;left:19px;top:48px;bottom:-24px;width:2px;background:linear-gradient(to bottom,var(--sage),var(--mint));z-index:0}
+.step-num{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pine),var(--moss));color:white;font-family:'DM Serif Display',serif;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;box-shadow:0 3px 10px rgba(45,106,79,0.35)}
+.step-body{flex:1;padding-bottom:36px}
+.step-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.step-title .stag{font-size:11px;font-weight:600;background:var(--ghost);color:var(--mist);border-radius:6px;padding:3px 10px;text-transform:uppercase;letter-spacing:.5px}
+.step-desc{font-size:14.5px;color:var(--slate);margin-bottom:14px;line-height:1.65}
+.step-card{background:white;border-radius:14px;border:1px solid var(--fog);overflow:hidden;box-shadow:0 2px 8px rgba(27,67,50,0.06)}
+.step-card-hd{background:var(--ghost);padding:12px 18px;font-size:12px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--fog)}
+.step-card-bd{padding:18px}
+
+/* ACTION LIST */
+.action-list{display:flex;flex-direction:column;gap:10px}
+.action-item{display:flex;align-items:flex-start;gap:12px}
+.action-icon{width:28px;height:28px;border-radius:7px;background:var(--ok-lt,#D8F3E3);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px}
+.action-text{font-size:14px;color:var(--slate);line-height:1.55}
+.action-text strong{color:var(--ink)}
+.action-text code{font-family:'JetBrains Mono',monospace;font-size:12.5px;background:var(--ghost);color:var(--pine);padding:1px 7px;border-radius:5px;border:1px solid var(--fog)}
+
+/* CODE BLOCK */
+.code-block{background:#0D1B14;border-radius:10px;overflow:hidden;margin-top:4px}
+.code-block-hd{background:rgba(255,255,255,0.06);padding:8px 14px;font-size:11px;color:rgba(255,255,255,0.4);font-family:'JetBrains Mono',monospace;display:flex;justify-content:space-between;align-items:center}
+.code-block pre{padding:16px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#B7E4C7;line-height:1.7;overflow-x:auto}
+.code-block pre .cmd{color:#F4C542}
+.code-block pre .cmt{color:rgba(183,228,199,0.4)}
+
+/* TIP BOX */
+.tip{background:linear-gradient(135deg,#e6f5ec,#f0fdf4);border:1px solid var(--mint);border-radius:12px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start}
+.tip-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.tip-text{font-size:14px;color:var(--pine);line-height:1.6}
+.tip-text strong{font-weight:700}
+
+.warn{background:#FEF5E4;border:1px solid #fde68a;border-radius:12px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start}
+.warn-text{font-size:14px;color:#92400E;line-height:1.6}
+
+/* URL DISPLAY */
+.url-box{background:var(--ghost);border:2px solid var(--sage);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;margin-top:4px}
+.url-icon{font-size:24px;flex-shrink:0}
+.url-text{font-family:'JetBrains Mono',monospace;font-size:15px;color:var(--pine);font-weight:600;word-break:break-all}
+.url-text span{color:var(--mist)}
+
+/* FILE TABLE */
+.file-table{width:100%;border-collapse:collapse;font-size:14px}
+.file-table thead th{background:var(--ghost);padding:10px 14px;text-align:left;font-weight:700;color:var(--slate);font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--fog)}
+.file-table tbody tr{border-bottom:1px solid var(--ghost)}
+.file-table tbody tr:last-child{border-bottom:none}
+.file-table tbody td{padding:11px 14px;color:var(--slate);vertical-align:middle}
+.file-table tbody td:first-child{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--pine);font-weight:600}
+.badge-req{background:#DCFCE7;color:#166534;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
+.badge-opt{background:var(--ghost);color:var(--mist);font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+
+/* FINAL CTA */
+.cta-box{background:linear-gradient(135deg,var(--forest),var(--pine));border-radius:18px;padding:36px 32px;text-align:center;margin:40px 0}
+.cta-box h3{font-family:'DM Serif Display',serif;font-size:26px;color:white;margin-bottom:8px}
+.cta-box p{color:rgba(255,255,255,0.65);font-size:15px;margin-bottom:22px}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--forest);font-weight:700;font-size:15px;padding:13px 28px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;transition:all .18s}
+.cta-btn:hover{background:white;transform:translateY(-2px)}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--fog),transparent);margin:8px 0}
+
+footer{background:var(--forest);color:rgba(255,255,255,0.5);text-align:center;padding:24px;font-size:13px}
+footer strong{color:var(--sage)}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-badge">🚀 Panduan Deploy GitHub Pages</div>
+    <h1>Deploy <span>SiSuRAT PKP</span><br>ke Internet</h1>
+    <p>Ikuti langkah berikut untuk mempublikasikan aplikasi surat secara online menggunakan GitHub Pages — <strong>gratis selamanya</strong></p>
+    <div class="hero-files">
+      <span class="hf">📄 index.html</span>
+      <span class="hf">📖 README.md</span>
+      <span class="hf">⚙️ .nojekyll</span>
+      <span class="hf">🔧 _config.yml</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- FILE LIST -->
+  <div class="section">
+    <div class="section-label">📦 File yang Diperlukan</div>
+    <h2>Pastikan Anda memiliki semua file ini</h2>
+    <p class="section-sub">Semua file sudah tersedia dalam paket yang Anda unduh</p>
+
+    <div class="step-card">
+      <div class="step-card-hd">📁 Isi Folder Paket</div>
+      <div class="step-card-bd">
+        <table class="file-table">
+          <thead><tr><th>Nama File</th><th>Fungsi</th><th>Wajib?</th></tr></thead>
+          <tbody>
+            <tr><td>index.html</td><td>Aplikasi utama SiSuRAT PKP (halaman yang dibuka saat akses URL)</td><td><span class="badge-req">✅ Wajib</span></td></tr>
+            <tr><td>README.md</td><td>Deskripsi repository yang tampil di halaman GitHub</td><td><span class="badge-req">✅ Wajib</span></td></tr>
+            <tr><td>.nojekyll</td><td>Menonaktifkan prosesor Jekyll agar file tidak diubah oleh GitHub</td><td><span class="badge-req">✅ Wajib</span></td></tr>
+            <tr><td>_config.yml</td><td>Konfigurasi judul dan deskripsi situs GitHub Pages</td><td><span class="badge-opt">Opsional</span></td></tr>
+            <tr><td>PANDUAN-DEPLOY.html</td><td>File panduan ini (tidak perlu diupload, hanya untuk referensi)</td><td><span class="badge-opt">Opsional</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- STEPS -->
+  <div class="section">
+    <div class="section-label">🗺️ Langkah-Langkah</div>
+    <h2>Deploy dalam 3 Langkah Mudah</h2>
+    <p class="section-sub">Tidak perlu keahlian teknis — cukup ikuti panduan berikut</p>
+
+    <div class="steps">
+
+      <!-- STEP 1 -->
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Buat Akun &amp; Repository GitHub <span class="stag">5 menit</span></div>
+          <p class="step-desc">Jika belum punya akun GitHub, daftar terlebih dahulu di <strong>github.com</strong>. Setelah masuk, buat repository baru untuk menyimpan file aplikasi.</p>
+          <div class="step-card">
+            <div class="step-card-hd">🖱️ Cara Membuat Repository</div>
+            <div class="step-card-bd">
+              <div class="action-list">
+                <div class="action-item"><div class="action-icon">1️⃣</div><div class="action-text">Buka <strong>github.com</strong> dan login ke akun Anda</div></div>
+                <div class="action-item"><div class="action-icon">2️⃣</div><div class="action-text">Klik tombol <strong>"New"</strong> (hijau) di pojok kiri atas, atau buka <code>github.com/new</code></div></div>
+                <div class="action-item"><div class="action-icon">3️⃣</div><div class="action-text">Isi <strong>Repository name</strong> dengan: <code>surat-pkp</code></div></div>
+                <div class="action-item"><div class="action-icon">4️⃣</div><div class="action-text">Pilih <strong>Public</strong> — ini wajib agar GitHub Pages dapat aktif secara gratis</div></div>
+                <div class="action-item"><div class="action-icon">5️⃣</div><div class="action-text">Klik tombol <strong>"Create repository"</strong> (warna hijau di bawah halaman)</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Upload File ke Repository <span class="stag">3 menit</span></div>
+          <p class="step-desc">Upload semua file dari folder paket ke repository GitHub yang baru dibuat. Pilih cara yang paling mudah untuk Anda.</p>
+
+          <div class="step-card" style="margin-bottom:14px">
+            <div class="step-card-hd">⭐ Cara A — Upload Langsung (Direkomendasikan, tanpa Git)</div>
+            <div class="step-card-bd">
+              <div class="action-list">
+                <div class="action-item"><div class="action-icon">1️⃣</div><div class="action-text">Di halaman repository kosong, klik link <strong>"uploading an existing file"</strong></div></div>
+                <div class="action-item"><div class="action-icon">2️⃣</div><div class="action-text">Seret dan lepas <strong>semua file</strong> berikut ke area upload: <code>index.html</code> <code>README.md</code> <code>.nojekyll</code> <code>_config.yml</code></div></div>
+                <div class="action-item"><div class="action-icon">3️⃣</div><div class="action-text">Tunggu proses upload selesai (lihat progres di bawah setiap file)</div></div>
+                <div class="action-item"><div class="action-icon">4️⃣</div><div class="action-text">Di bagian <strong>"Commit changes"</strong>, tulis pesan: <code>Upload aplikasi SiSuRAT PKP</code></div></div>
+                <div class="action-item"><div class="action-icon">5️⃣</div><div class="action-text">Klik tombol <strong>"Commit changes"</strong> warna hijau</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip" style="margin-bottom:14px">
+            <div class="tip-icon">💡</div>
+            <div class="tip-text"><strong>Catatan file .nojekyll:</strong> File ini tidak memiliki konten (kosong), fungsinya hanya sebagai penanda. Pastikan file ini ikut terupload. Jika tidak terlihat di file manager karena diawali titik, aktifkan tampilan <em>"Show hidden files"</em>.</div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-card-hd">💻 Cara B — Via Git (untuk yang sudah familiar)</div>
+            <div class="step-card-bd">
+              <div class="code-block">
+                <div class="code-block-hd"><span>Terminal / Command Prompt</span></div>
+                <pre><span class="cmt"># 1. Clone repository kosong yang sudah dibuat</span>
+<span class="cmd">git clone https://github.com/USERNAME/surat-pkp.git</span>
+<span class="cmd">cd surat-pkp</span>
+
+<span class="cmt"># 2. Salin semua file dari folder paket ke sini
+#    (index.html, README.md, .nojekyll, _config.yml)</span>
+
+<span class="cmt"># 3. Tambahkan semua file</span>
+<span class="cmd">git add .</span>
+
+<span class="cmt"># 4. Commit</span>
+<span class="cmd">git commit -m "Upload aplikasi SiSuRAT PKP"</span>
+
+<span class="cmt"># 5. Push ke GitHub</span>
+<span class="cmd">git push origin main</span></pre>
+              </div>
+              <div class="tip" style="margin-top:12px">
+                <div class="tip-icon">ℹ️</div>
+                <div class="tip-text">Ganti <strong>USERNAME</strong> dengan username GitHub Anda yang sebenarnya.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Aktifkan GitHub Pages <span class="stag">2 menit</span></div>
+          <p class="step-desc">Setelah file terupload, aktifkan fitur GitHub Pages agar aplikasi dapat diakses melalui internet.</p>
+          <div class="step-card" style="margin-bottom:14px">
+            <div class="step-card-hd">⚙️ Pengaturan GitHub Pages</div>
+            <div class="step-card-bd">
+              <div class="action-list">
+                <div class="action-item"><div class="action-icon">1️⃣</div><div class="action-text">Di halaman repository, klik tab <strong>"Settings"</strong> (pojok kanan, ikon roda gigi)</div></div>
+                <div class="action-item"><div class="action-icon">2️⃣</div><div class="action-text">Di menu kiri, scroll ke bawah dan klik <strong>"Pages"</strong> (di bawah section "Code and automation")</div></div>
+                <div class="action-item"><div class="action-icon">3️⃣</div><div class="action-text">Di bagian <strong>"Source"</strong> — pilih <strong>"Deploy from a branch"</strong></div></div>
+                <div class="action-item"><div class="action-icon">4️⃣</div><div class="action-text">Pada dropdown <strong>Branch</strong>: pilih <code>main</code> dan folder <code>/ (root)</code></div></div>
+                <div class="action-item"><div class="action-icon">5️⃣</div><div class="action-text">Klik tombol <strong>"Save"</strong></div></div>
+                <div class="action-item"><div class="action-icon">⏱️</div><div class="action-text">Tunggu <strong>1–3 menit</strong>. Refresh halaman Settings → Pages. Akan muncul kotak hijau berisi URL aplikasi Anda.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <p style="font-size:13px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🌐 URL Aplikasi Anda</p>
+            <div class="url-box">
+              <div class="url-icon">🔗</div>
+              <div class="url-text">https://<span>USERNAME</span>.github.io/<span>surat-pkp</span></div>
+            </div>
+          </div>
+
+          <div class="tip">
+            <div class="tip-icon">✅</div>
+            <div class="tip-text"><strong>Berhasil!</strong> Jika muncul notifikasi berwarna hijau di halaman Settings → Pages, berarti aplikasi Anda sudah online. Bagikan URL tersebut kepada rekan-rekan di bidang PKP.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end .steps -->
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="section">
+    <div class="section-label">🔧 Troubleshooting</div>
+    <h2>Solusi Masalah Umum</h2>
+    <p class="section-sub">Jika ada kendala, cek solusi berikut</p>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <div class="warn">
+        <div style="font-size:20px;flex-shrink:0">⚠️</div>
+        <div class="warn-text">
+          <strong>Halaman menampilkan 404 (Not Found)</strong><br>
+          Pastikan file bernama persis <code>index.html</code> (bukan <code>Index.html</code> atau nama lain). GitHub Pages mencari file <code>index.html</code> sebagai halaman utama. Tunggu juga 3–5 menit setelah mengaktifkan Pages.
+        </div>
+      </div>
+
+      <div class="warn">
+        <div style="font-size:20px;flex-shrink:0">⚠️</div>
+        <div class="warn-text">
+          <strong>Opsi "Public" tidak tersedia saat buat repository</strong><br>
+          GitHub Pages gratis hanya untuk repository Public. Jika menggunakan akun organisasi/edu, mungkin perlu upgrade. Solusi: pastikan pilih <strong>Public</strong> saat membuat repository.
+        </div>
+      </div>
+
+      <div class="warn">
+        <div style="font-size:20px;flex-shrink:0">⚠️</div>
+        <div class="warn-text">
+          <strong>File .nojekyll tidak bisa diupload (tidak terlihat)</strong><br>
+          File diawali titik tersembunyi di Windows. Buka File Explorer → View → centang <strong>"Hidden items"</strong>. Di Mac: tekan <strong>Cmd + Shift + .</strong> untuk tampilkan file tersembunyi.
+        </div>
+      </div>
+
+      <div class="tip">
+        <div class="tip-icon">💡</div>
+        <div class="tip-text">
+          <strong>Data tidak tersimpan antar perangkat?</strong> Ini normal — aplikasi menggunakan localStorage browser. Untuk backup rutin, gunakan tombol <strong>Export CSV</strong> di halaman Surat Masuk dan Surat Keluar.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-box">
+    <h3>Siap untuk Online? 🚀</h3>
+    <p>Ikuti 3 langkah di atas dan aplikasi SiSuRAT PKP Anda<br>akan dapat diakses dari mana saja, kapan saja — gratis!</p>
+    <a href="https://github.com/new" target="_blank" class="cta-btn">
+      🐙 Buka GitHub — Buat Repository
+    </a>
+  </div>
+
+</div><!-- end .container -->
+
+<footer>
+  <strong>SiSuRAT PKP</strong> — Bidang Perumahan dan Kawasan Permukiman<br>
+  Dinas PerkimTanLH Kabupaten Kapuas Hulu · Provinsi Kalimantan Barat
+</footer>
+
+</body>
+</html>
